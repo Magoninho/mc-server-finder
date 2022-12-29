@@ -1,0 +1,4 @@
+Point(x=1628, y=955) - Adicionar servidor
+Point(x=1357, y=263) - Endereço do servidor
+
+ctrl + v
