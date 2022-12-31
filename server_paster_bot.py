@@ -9,10 +9,11 @@ import keyboard
 
 with open("open_servers.txt", 'r') as f:
 	servers = f.read().splitlines()
+	servers_len = len(servers)
 
 time.sleep(3)
 
-for i in range(30):
+for i in range(servers_len):
 	pyautogui.moveTo(1628, 955)
 	pyautogui.click()
 

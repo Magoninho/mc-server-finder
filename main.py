@@ -1,32 +1,48 @@
 # This script will find opened ports in a bunch of ngrok ip addresses
 # and then write the found IPs to open_servers.txt
 
-import socket, os
+import os
+from mcstatus import JavaServer
+
+# server = JavaServer.lookup("mc.hypixel.nett")
+
+
+# try:
+# 	status = server.status()
+# 	print("deu certo")
+# except:
+# 	print("fudeu")
+
+number = input("server number: ")
+region = input("server region [sa, eu, ap, au]: ")
+
 
 progress = 0
 
-def is_open(port):
 
-	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def is_open(server_ip):
+    server = JavaServer.lookup(server_ip)
 
-	result = sock.connect_ex(('0.tcp.sa.ngrok.io', port))
-
-	return True if result == 0 else False
-
-with open('ports.txt', 'r') as f:
-	ports = f.read().splitlines()
-	
-	with open('open_servers.txt', 'w') as b:
-		for p in ports:
-			current_port = int(p)
-			if is_open(current_port):
-				b.write(f"0.tcp.sa.ngrok.io:{current_port}\n")
-				progress += 1
-				os.system("clear")
-				print(f"{progress} servers found...")
-			else:
-				continue
-			
+    try:
+        server.status()  # check if the server is on minecraft
+        return True
+    except:
+        # if it gives an error, the server does not exist
+        return False
 
 
-# 14457
+with open("ports.txt", "r") as f:
+    ports = f.read().splitlines()
+
+    with open("open_servers.txt", "w") as b:
+        for p in ports:
+            # for number in [0, 2, 6, 7, 8]:
+            current_port = int(p)
+            server_ip = f"{number}.tcp.{region}.ngrok.io:{current_port}"
+            if is_open(server_ip):
+                b.write(f"{server_ip}\n")
+                progress += 1
+                # os.system("clear")
+                print(f"{progress} servers found... [{server_ip}]")
+            else:
+                continue

@@ -1,6 +1,6 @@
 import pyautogui, time
 
-for _ in range(4):
+for _ in range(40):
     server_click = (1324, 798)
     server_delete = (1351, 1009)
     server_confirm_delete = (1243, 409)
